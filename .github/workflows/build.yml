@@ -2,7 +2,11 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - '**'
+    paths-ignore:
+      - 'README.md'
+    tags-ignore:
+      - '**'
 
 jobs:
   build:
