@@ -1,7 +1,7 @@
 <h1 align="center">gop</h1>
 
 <div align="center">
-  simple tool to open current git repository's remote url in the default browser.
+  simple cli app to open current git repository's remote url in the default browser.
 </div>
 
 <br>
