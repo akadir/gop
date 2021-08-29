@@ -11,13 +11,40 @@ import (
 )
 
 func Run() {
+	validPages := []string{"p", "pipeline", "w", "workflow", "mr", "pr"}
+
 	app := &cli.App{
 		Name:  "gop",
 		Usage: "open current git repository's remote url on browser.",
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:    "o",
+				Aliases: []string{"open"},
+				Usage:   "open specific page of the repository. valid values: " + strings.Join(validPages, " "),
+			},
+		},
 		Action: func(c *cli.Context) error {
 			url := getRepositoryUrl()
 
-			openBrowser(url)
+			specifiedPage := c.String("o")
+
+			if specifiedPage != "" {
+				ok := false
+
+				for _, valid := range validPages {
+					if specifiedPage == valid {
+						ok = true
+					}
+				}
+
+				if !ok {
+					return fmt.Errorf("page must be one of %v", validPages)
+				}
+
+				url = getSpecifiedPageUrl(url, specifiedPage)
+			}
+			fmt.Printf(url)
+			openInBrowser(url)
 
 			return nil
 		},
@@ -49,7 +76,27 @@ func getRepositoryUrl() string {
 	return gitRemote
 }
 
-func openBrowser(url string) {
+func getSpecifiedPageUrl(url string, page string) string {
+	if strings.Contains(url, "github") {
+		if page == "p" || page == "pipeline" || page == "workflow" || page == "w" {
+			url += "/actions"
+		} else if page == "mr" || page == "pr" {
+			url += "/pulls"
+		}
+	} else if strings.Contains(url, "gitlab") {
+		if page == "p" || page == "pipeline" || page == "workflow" || page == "w" {
+			url += "/pipelines"
+		} else if page == "mr" || page == "pr" {
+			url += "/merge_requests"
+		}
+	} else {
+		fmt.Printf("unknown git hosting service.")
+	}
+
+	return url
+}
+
+func openInBrowser(url string) {
 	var err error
 
 	switch runtime.GOOS {
