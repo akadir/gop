@@ -43,7 +43,7 @@ func Run() {
 
 				url = getSpecifiedPageUrl(url, specifiedPage)
 			}
-			fmt.Printf(url)
+
 			openInBrowser(url)
 
 			return nil
