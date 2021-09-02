@@ -17,3 +17,27 @@
     <img src="https://github.com/akadir/gop/actions/workflows/build.yml/badge.svg" alt="CI"/>
   </a>
 </div>
+
+## Usage
+
+Currently, in beta version. 
+
+```shell
+$ gop -h
+NAME:
+   gop - open current git repository's remote url on browser.
+
+USAGE:
+   gop [global options] command [command options] [arguments...]
+
+COMMANDS:
+   help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   -o value, --open value  open specific page of the repository. valid values: p pipeline w workflow mr pr
+   --help, -h              show help (default: false)
+```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
