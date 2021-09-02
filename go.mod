@@ -1,4 +1,4 @@
-module gop
+module github.com/akadir/gop
 
 go 1.17
 

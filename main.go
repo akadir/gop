@@ -1,6 +1,6 @@
 package main
 
-import "gop/cmd"
+import "github.com/akadir/gop/cmd"
 
 func main() {
 	cmd.Run()
