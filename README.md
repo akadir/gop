@@ -16,6 +16,12 @@
   <a href="https://github.com/akadir/gop/actions" title="build status">
     <img src="https://github.com/akadir/gop/actions/workflows/build.yml/badge.svg" alt="CI"/>
   </a>
+
+  <!-- License -->
+  <a href="https://img.shields.io/badge/License-MIT-blue.svg">
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg"
+      alt="License" />
+  </a>
 </div>
 
 ## Usage
