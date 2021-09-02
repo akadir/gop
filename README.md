@@ -22,8 +22,10 @@
 
 Currently, in beta version. 
 
+Run `gop` under git repository. `gop -h` to show help.
 ```shell
 $ gop -h
+
 NAME:
    gop - open current git repository's remote url on browser.
 
