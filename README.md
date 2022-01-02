@@ -24,14 +24,21 @@
   </a>
 </div>
 
+## Installation
+
+```bash
+brew tap akadir/gop
+brew install gop
+```
+
 ## Usage
 
 Currently, in beta version. 
 
 Run `gop` under git repository. `gop -h` to show help.
-```shell
-$ gop -h
 
+```shell
+> gop -h
 NAME:
    gop - open current git repository's remote url on browser.
 
@@ -40,10 +47,13 @@ USAGE:
 
 COMMANDS:
    help, h  Shows a list of commands or help for one command
+   open:
+     ob, open-branch                                    open current branch in browser.
+     op, oa, open-pipelines, open-actions               open actions/pipelines page of the repository.
+     omr, opr, open-merge-requests, open-pull-requests  open mrs/prs page of the repository.
 
 GLOBAL OPTIONS:
-   -o value, --open value  open specific page of the repository. valid values: p pipeline w workflow mr pr
-   --help, -h              show help (default: false)
+   --help, -h  show help (default: false)
 ```
 
 ## License
