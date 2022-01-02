@@ -62,6 +62,13 @@ func Run() {
 				},
 			},
 		},
+		Action: func(c *cli.Context) error {
+			url := getRepositoryUrl()
+
+			openInBrowser(url)
+
+			return nil
+		},
 	}
 
 	err := app.Run(os.Args)
