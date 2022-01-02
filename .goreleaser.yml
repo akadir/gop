@@ -17,12 +17,26 @@ builds:
       - arm64
       - amd64
 archives:
-  - replacements:
-      darwin: Darwin
+  # default format for Mac (darwin) and Linux
+  - format: tar.gz
+    # if the OS is windows, we override and put everything in a .zip instead.
+    format_overrides:
+      - goos: windows
+        format: zip
+    # Just the naming convention for tarballs... Example: msconsole_1.0.0_darwin_64bit
+    name_template: '{{.ProjectName}}_{{.Version}}_{{.Os}}-{{.Arch}}'
+    # Replace the cryptic arch's with readable human naming conventions
+    replacements:
+      amd64: 64bit
+      386: 32bit
+      arm: ARM
+      arm64: ARM64
+      darwin: macOS
       linux: Linux
       windows: Windows
-      386: i386
-      amd64: x86_64
+    files:
+      - Readme.MD
+      - LICENSE
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -33,3 +47,6 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+      - 'README'
+      - Merge pull request
+      - Merge branch
