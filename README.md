@@ -26,9 +26,12 @@
 
 ## Installation
 
-```bash
-brew tap akadir/gop
-brew install gop
+```shell
+brew install akadir/gop/gop
+```
+or
+```shell
+brew tap akadir/gop && brew install gop
 ```
 
 ## Usage
