@@ -50,3 +50,10 @@ changelog:
       - 'README'
       - Merge pull request
       - Merge branch
+brews:
+  - tap:
+      owner: akadir
+      name: homebrew-gop
+    folder: Formula
+    homepage: https://github.com/akadir/homebrew-gop
+    description: simple cli app to open current git repository's remote url in the default browser.
