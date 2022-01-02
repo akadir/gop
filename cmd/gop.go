@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
-	"log"
 	"os"
 	"os/exec"
 	"runtime"
@@ -11,48 +11,64 @@ import (
 )
 
 func Run() {
-	validPages := []string{"p", "pipeline", "w", "workflow", "mr", "pr"}
-
 	app := &cli.App{
 		Name:  "gop",
 		Usage: "open current git repository's remote url on browser.",
-		Flags: []cli.Flag{
-			&cli.StringFlag{
-				Name:    "o",
-				Aliases: []string{"open"},
-				Usage:   "open specific page of the repository. valid values: " + strings.Join(validPages, " "),
+		Commands: []*cli.Command{
+			{
+				Name:     "ob",
+				Aliases:  []string{"open-branch"},
+				Category: "open",
+				Usage:    "open current branch in browser.",
+				Action: func(c *cli.Context) error {
+					url := getRepositoryUrl()
+					branchName := getCurrentBranchName()
+
+					url += "/tree/" + branchName
+
+					openInBrowser(url)
+
+					return nil
+				},
 			},
-		},
-		Action: func(c *cli.Context) error {
-			url := getRepositoryUrl()
+			{
+				Name:     "op",
+				Aliases:  []string{"oa", "open-pipelines", "open-actions"},
+				Category: "open",
+				Usage:    "open actions/pipelines page of the repository.",
+				Action: func(c *cli.Context) error {
+					url := getRepositoryUrl()
 
-			specifiedPage := c.String("o")
+					url = getSpecifiedPageUrl(url, "p")
 
-			if specifiedPage != "" {
-				ok := false
+					openInBrowser(url)
 
-				for _, valid := range validPages {
-					if specifiedPage == valid {
-						ok = true
-					}
-				}
+					return nil
+				},
+			},
+			{
+				Name:     "omr",
+				Aliases:  []string{"opr", "open-merge-requests", "open-pull-requests"},
+				Category: "open",
+				Usage:    "open mrs/prs page of the repository.",
+				Action: func(c *cli.Context) error {
+					url := getRepositoryUrl()
 
-				if !ok {
-					return fmt.Errorf("page must be one of %v", validPages)
-				}
+					url = getSpecifiedPageUrl(url, "mr")
 
-				url = getSpecifiedPageUrl(url, specifiedPage)
-			}
+					openInBrowser(url)
 
-			openInBrowser(url)
-
-			return nil
+					return nil
+				},
+			},
 		},
 	}
 
 	err := app.Run(os.Args)
 	if err != nil {
-		log.Fatal(err)
+		color.Red(err.Error())
+		color.Unset()
+		os.Exit(1)
 	}
 }
 
@@ -60,7 +76,9 @@ func getRepositoryUrl() string {
 	output, err := exec.Command("git", "remote", "get-url", "origin").Output()
 
 	if err != nil {
-		log.Fatal("Not a git repository: ", err.Error())
+		color.Red("Not a git repository: %s", err.Error())
+		color.Unset()
+		os.Exit(1)
 	}
 
 	gitRemote := string(output)
@@ -76,21 +94,37 @@ func getRepositoryUrl() string {
 	return gitRemote
 }
 
+func getCurrentBranchName() string {
+	output, err := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").Output()
+
+	if err != nil {
+		color.Red(err.Error())
+		color.Unset()
+		os.Exit(1)
+	}
+
+	currentBranch := string(output)
+
+	return strings.TrimSpace(currentBranch)
+}
+
 func getSpecifiedPageUrl(url string, page string) string {
 	if strings.Contains(url, "github") {
-		if page == "p" || page == "pipeline" || page == "workflow" || page == "w" {
+		if page == "p" || page == "pipelines" || page == "actions" || page == "a" {
 			url += "/actions"
 		} else if page == "mr" || page == "pr" {
 			url += "/pulls"
 		}
 	} else if strings.Contains(url, "gitlab") {
-		if page == "p" || page == "pipeline" || page == "workflow" || page == "w" {
+		if page == "p" || page == "pipelines" || page == "actions" || page == "a" {
 			url += "/pipelines"
 		} else if page == "mr" || page == "pr" {
 			url += "/merge_requests"
 		}
 	} else {
-		fmt.Printf("unknown git hosting service.")
+		color.Red("unknown git hosting service.")
+		color.Unset()
+		os.Exit(1)
 	}
 
 	return url
@@ -111,6 +145,7 @@ func openInBrowser(url string) {
 	}
 
 	if err != nil {
-		log.Fatal(err)
+		fmt.Printf(err.Error())
+		os.Exit(1)
 	}
 }
