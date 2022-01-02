@@ -36,7 +36,7 @@ brew tap akadir/gop && brew install gop
 
 ## Usage
 
-Currently, in beta version. 
+Currently, in **beta** version.
 
 Run `gop` under git repository. `gop -h` to show help.
 
