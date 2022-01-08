@@ -82,10 +82,10 @@ func Run() {
 }
 
 func getRepositoryUrl() string {
-	output, err := exec.Command("git", "remote", "get-url", "origin").Output()
+	output, err := exec.Command("git", "remote", "get-url", "origin").CombinedOutput()
 
 	if err != nil {
-		color.Red("Not a git repository: %s", err.Error())
+		color.Red("%s", string(output))
 		color.Unset()
 		os.Exit(1)
 	}
