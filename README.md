@@ -66,6 +66,8 @@ GLOBAL OPTIONS:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
+<br />
+
 <div align="center">
   Developed with ❤︎ by <a href="https://github.com/akadir">akadir</a>
 </div>
