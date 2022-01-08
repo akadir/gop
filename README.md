@@ -48,15 +48,18 @@ NAME:
 USAGE:
    gop [global options] command [command options] [arguments...]
 
+VERSION:
+   0.2.2
+
 COMMANDS:
-   help, h  Shows a list of commands or help for one command
-   open:
-     ob, open-branch                                    open current branch in browser.
-     op, oa, open-pipelines, open-actions               open actions/pipelines page of the repository.
-     omr, opr, open-merge-requests, open-pull-requests  open mrs/prs page of the repository.
+   current-branch      open current branch in browser.
+   actions, pipelines  open actions/pipelines page of the repository.
+   mrs, prs            open mrs/prs page of the repository.
+   help, h             Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --help, -h  show help (default: false)
+   --help, -h     show help (default: false)
+   --version, -v  print only the version (default: false)
 ```
 
 ## License
