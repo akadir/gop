@@ -12,19 +12,16 @@ import (
 
 func Run() {
 	app := &cli.App{
-		Name:  "gop",
-		Usage: "open current git repository's remote url on browser.",
+		Name:    "gop",
+		Usage:   "open current git repository's remote url on browser.",
 		Commands: []*cli.Command{
 			{
-				Name:     "ob",
-				Aliases:  []string{"open-branch"},
-				Category: "open",
-				Usage:    "open current branch in browser.",
+				Name:  "current-branch",
+				Usage: "open current branch in browser.",
 				Action: func(c *cli.Context) error {
 					url := getRepositoryUrl()
-					branchName := getCurrentBranchName()
 
-					url += "/tree/" + branchName
+					url = getSpecifiedPageUrl(url, "current-branch")
 
 					openInBrowser(url)
 
@@ -32,10 +29,9 @@ func Run() {
 				},
 			},
 			{
-				Name:     "op",
-				Aliases:  []string{"oa", "open-pipelines", "open-actions"},
-				Category: "open",
-				Usage:    "open actions/pipelines page of the repository.",
+				Name:    "actions",
+				Aliases: []string{"pipelines"},
+				Usage:   "open actions/pipelines page of the repository.",
 				Action: func(c *cli.Context) error {
 					url := getRepositoryUrl()
 
@@ -47,10 +43,9 @@ func Run() {
 				},
 			},
 			{
-				Name:     "omr",
-				Aliases:  []string{"opr", "open-merge-requests", "open-pull-requests"},
-				Category: "open",
-				Usage:    "open mrs/prs page of the repository.",
+				Name:    "mrs",
+				Aliases: []string{"prs"},
+				Usage:   "open mrs/prs page of the repository.",
 				Action: func(c *cli.Context) error {
 					url := getRepositoryUrl()
 
@@ -93,6 +88,7 @@ func getRepositoryUrl() string {
 	if strings.HasPrefix(gitRemote, "git@") {
 		gitRemote = strings.Replace(gitRemote, "git@", "https://", 1)
 		gitRemote = strings.Replace(gitRemote, ".com:", ".com/", 1)
+		gitRemote = strings.Replace(gitRemote, ".org:", ".org/", 1)
 		gitRemote = strings.Replace(gitRemote, ".git", "", 1)
 	}
 
@@ -117,16 +113,31 @@ func getCurrentBranchName() string {
 
 func getSpecifiedPageUrl(url string, page string) string {
 	if strings.Contains(url, "github") {
-		if page == "p" || page == "pipelines" || page == "actions" || page == "a" {
+		if page == "p" {
 			url += "/actions"
-		} else if page == "mr" || page == "pr" {
+		} else if page == "mr" {
 			url += "/pulls"
+		} else if page == "current-branch" {
+			branchName := getCurrentBranchName()
+			url += "/tree/" + branchName
 		}
 	} else if strings.Contains(url, "gitlab") {
-		if page == "p" || page == "pipelines" || page == "actions" || page == "a" {
+		if page == "p" {
 			url += "/pipelines"
-		} else if page == "mr" || page == "pr" {
+		} else if page == "mr" {
 			url += "/merge_requests"
+		} else if page == "current-branch" {
+			branchName := getCurrentBranchName()
+			url += "/tree/" + branchName
+		}
+	} else if strings.Contains(url, "bitbucket") {
+		if page == "p" {
+			url += "/addon/pipelines/home"
+		} else if page == "mr" {
+			url += "/pull-requests"
+		} else if page == "current-branch" {
+			branchName := getCurrentBranchName()
+			url += "/src/" + branchName
 		}
 	} else {
 		color.Red("unknown git hosting service.")
