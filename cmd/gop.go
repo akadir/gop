@@ -85,7 +85,7 @@ func getRepositoryUrl() string {
 	output, err := exec.Command("git", "remote", "get-url", "origin").CombinedOutput()
 
 	if err != nil {
-		color.Red("%s", string(output))
+		color.Red("%s", strings.TrimSpace(string(output)))
 		color.Unset()
 		os.Exit(1)
 	}
@@ -105,10 +105,10 @@ func getRepositoryUrl() string {
 }
 
 func getCurrentBranchName() string {
-	output, err := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").Output()
+	output, err := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").CombinedOutput()
 
 	if err != nil {
-		color.Red(err.Error())
+		color.Red("%s", strings.TrimSpace(string(output)))
 		color.Unset()
 		os.Exit(1)
 	}
