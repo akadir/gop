@@ -17,6 +17,11 @@
     <img src="https://github.com/akadir/gop/actions/workflows/build.yml/badge.svg" alt="CI"/>
   </a>
 
+  <!-- last commit-->
+  <a href="https://github.com/akadir/muninn/commits" title="Last Commit">
+     <img src="https://img.shields.io/github/last-commit/akadir/gop?style=flat" alt="last commit">
+  </a>
+
   <!-- License -->
   <a href="https://img.shields.io/badge/License-MIT-blue.svg">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg"
