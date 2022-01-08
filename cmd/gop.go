@@ -13,6 +13,7 @@ import (
 func Run() {
 	app := &cli.App{
 		Name:    "gop",
+		Version: "0.1.0",
 		Usage:   "open current git repository's remote url on browser.",
 		Commands: []*cli.Command{
 			{
@@ -64,6 +65,12 @@ func Run() {
 
 			return nil
 		},
+	}
+
+	cli.VersionFlag = &cli.BoolFlag{
+		Name:    "version",
+		Aliases: []string{"v"},
+		Usage:   "print only the version",
 	}
 
 	err := app.Run(os.Args)
