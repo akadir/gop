@@ -13,7 +13,7 @@ import (
 func Run() {
 	app := &cli.App{
 		Name:    "gop",
-		Version: "0.2.0",
+		Version: "0.2.1",
 		Usage:   "open current git repository's remote url on browser.",
 		Commands: []*cli.Command{
 			{
