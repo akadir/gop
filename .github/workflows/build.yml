@@ -33,10 +33,6 @@ jobs:
 
       - name: Run tests
         run: go test ./... -count=1 -coverprofile=coverage.out
-        uses: actions/upload-artifact@v1
-        with:
-          name: code-coverage-report
-          path: bin
 
       - name: Build app
         run: go build -v .
