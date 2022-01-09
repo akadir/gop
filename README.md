@@ -43,7 +43,7 @@ brew tap akadir/gop && brew install gop
 
 Currently, in **beta** version.
 
-Run `gop` under git repository. `gop -h` to show help.
+Run `gop` under git repository. `gop -h` to see help.
 
 ```shell
 > gop -h
@@ -57,9 +57,9 @@ VERSION:
    0.2.2
 
 COMMANDS:
-   current-branch      open current branch in browser.
-   actions, pipelines  open actions/pipelines page of the repository.
-   mrs, prs            open mrs/prs page of the repository.
+   branch              opens current branch in browser.
+   actions, pipelines  opens actions/pipelines page of the repository.
+   mrs, prs            opens mrs/prs page of the repository.
    help, h             Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
