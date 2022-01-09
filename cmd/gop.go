@@ -2,27 +2,30 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/akadir/gop/cmd/git"
+	ServiceDecider "github.com/akadir/gop/git_service"
+	"github.com/akadir/gop/page"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"os"
 	"os/exec"
 	"runtime"
-	"strings"
 )
 
 func Run() {
 	app := &cli.App{
 		Name:    "gop",
 		Version: "0.2.2",
-		Usage:   "open current git repository's remote url on browser.",
+		Usage:   "opens current git repository's remote url on browser.",
 		Commands: []*cli.Command{
 			{
-				Name:  "current-branch",
-				Usage: "open current branch in browser.",
+				Name:  "branch",
+				Usage: "opens current branch in browser.",
 				Action: func(c *cli.Context) error {
-					url := getRepositoryUrl()
+					url := git.GetRepositoryUrl()
 
-					url = getSpecifiedPageUrl(url, "current-branch")
+					gitService := ServiceDecider.Decide(url)
+					url += gitService.GetPath(page.Branch)
 
 					openInBrowser(url)
 
@@ -32,11 +35,12 @@ func Run() {
 			{
 				Name:    "actions",
 				Aliases: []string{"pipelines"},
-				Usage:   "open actions/pipelines page of the repository.",
+				Usage:   "opens actions/pipelines page of the repository.",
 				Action: func(c *cli.Context) error {
-					url := getRepositoryUrl()
+					url := git.GetRepositoryUrl()
 
-					url = getSpecifiedPageUrl(url, "p")
+					gitService := ServiceDecider.Decide(url)
+					url += gitService.GetPath(page.Pipeline)
 
 					openInBrowser(url)
 
@@ -46,11 +50,12 @@ func Run() {
 			{
 				Name:    "mrs",
 				Aliases: []string{"prs"},
-				Usage:   "open mrs/prs page of the repository.",
+				Usage:   "opens mrs/prs page of the repository.",
 				Action: func(c *cli.Context) error {
-					url := getRepositoryUrl()
+					url := git.GetRepositoryUrl()
 
-					url = getSpecifiedPageUrl(url, "mr")
+					gitService := ServiceDecider.Decide(url)
+					url += gitService.GetPath(page.Mr)
 
 					openInBrowser(url)
 
@@ -59,7 +64,7 @@ func Run() {
 			},
 		},
 		Action: func(c *cli.Context) error {
-			url := getRepositoryUrl()
+			url := git.GetRepositoryUrl()
 
 			openInBrowser(url)
 
@@ -81,80 +86,6 @@ func Run() {
 	}
 }
 
-func getRepositoryUrl() string {
-	output, err := exec.Command("git", "remote", "get-url", "origin").CombinedOutput()
-
-	if err != nil {
-		color.Red("%s", strings.TrimSpace(string(output)))
-		color.Unset()
-		os.Exit(1)
-	}
-
-	gitRemote := string(output)
-
-	if strings.HasPrefix(gitRemote, "git@") {
-		gitRemote = strings.Replace(gitRemote, "git@", "https://", 1)
-		gitRemote = strings.Replace(gitRemote, ".com:", ".com/", 1)
-		gitRemote = strings.Replace(gitRemote, ".org:", ".org/", 1)
-		gitRemote = strings.Replace(gitRemote, ".git", "", 1)
-	}
-
-	gitRemote = strings.TrimSpace(gitRemote)
-
-	return gitRemote
-}
-
-func getCurrentBranchName() string {
-	output, err := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").CombinedOutput()
-
-	if err != nil {
-		color.Red("%s", strings.TrimSpace(string(output)))
-		color.Unset()
-		os.Exit(1)
-	}
-
-	currentBranch := string(output)
-
-	return strings.TrimSpace(currentBranch)
-}
-
-func getSpecifiedPageUrl(url string, page string) string {
-	if strings.Contains(url, "github") {
-		if page == "p" {
-			url += "/actions"
-		} else if page == "mr" {
-			url += "/pulls"
-		} else if page == "current-branch" {
-			branchName := getCurrentBranchName()
-			url += "/tree/" + branchName
-		}
-	} else if strings.Contains(url, "gitlab") {
-		if page == "p" {
-			url += "/pipelines"
-		} else if page == "mr" {
-			url += "/merge_requests"
-		} else if page == "current-branch" {
-			branchName := getCurrentBranchName()
-			url += "/tree/" + branchName
-		}
-	} else if strings.Contains(url, "bitbucket") {
-		if page == "p" {
-			url += "/addon/pipelines/home"
-		} else if page == "mr" {
-			url += "/pull-requests"
-		} else if page == "current-branch" {
-			branchName := getCurrentBranchName()
-			url += "/src/" + branchName
-		}
-	} else {
-		color.Red("unknown git hosting service.")
-		color.Unset()
-		os.Exit(1)
-	}
-
-	return url
-}
-
 func openInBrowser(url string) {
 	var err error
 
@@ -170,7 +101,8 @@ func openInBrowser(url string) {
 	}
 
 	if err != nil {
-		fmt.Printf(err.Error())
+		color.Red(err.Error())
+		color.Unset()
 		os.Exit(1)
 	}
 }
