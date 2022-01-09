@@ -15,7 +15,7 @@ import (
 func Run() {
 	app := &cli.App{
 		Name:    "gop",
-		Version: "0.2.2",
+		Version: "0.3.0",
 		Usage:   "opens current git repository's remote url on browser.",
 		Commands: []*cli.Command{
 			{
