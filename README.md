@@ -53,18 +53,19 @@ Run `gop` under git repository. `gop -h` to see help.
 ```shell
 > gop -h
 NAME:
-   gop - open current git repository's remote url on browser.
+   gop - opens current git repository's remote url on browser.
 
 USAGE:
    gop [global options] command [command options] [arguments...]
 
 VERSION:
-   0.2.2
+   0.5.0
 
 COMMANDS:
    branch              opens current branch in browser.
    actions, pipelines  opens actions/pipelines page of the repository.
    mrs, prs            opens mrs/prs page of the repository.
+   issues              opens issues page of the repository.
    help, h             Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
