@@ -17,9 +17,14 @@
     <img src="https://github.com/akadir/gop/actions/workflows/build.yml/badge.svg" alt="CI"/>
   </a>
 
-  <!-- last commit-->
+  <!-- last commit -->
   <a href="https://github.com/akadir/muninn/commits" title="Last Commit">
      <img src="https://img.shields.io/github/last-commit/akadir/gop?style=flat" alt="last commit">
+  </a>
+
+  <!-- quality gate -->
+  <a href="https://sonarcloud.io/project/overview?id=akadir_gop" title="Quality Gate">
+     <img src="https://sonarcloud.io/api/project_badges/measure?project=akadir_gop&metric=alert_status" alt="quality gate">
   </a>
 
   <!-- License -->
