@@ -4,6 +4,7 @@ import (
 	"github.com/fatih/color"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 )
 
@@ -19,11 +20,14 @@ func GetRepositoryUrl() string {
 	gitRemote := strings.TrimSpace(string(output))
 
 	if strings.HasPrefix(gitRemote, "git@") {
+		gitRemote = strings.Replace(gitRemote, ":", "/", 1)
 		gitRemote = strings.Replace(gitRemote, "git@", "https://", 1)
-		gitRemote = strings.Replace(gitRemote, ".com:", ".com/", 1)
-		gitRemote = strings.Replace(gitRemote, ".org:", ".org/", 1)
-		gitRemote = strings.Replace(gitRemote, ".git", "", 1)
 	}
+
+	bitbucketPrefix := regexp.MustCompile(`\w*@`)
+	gitRemote = bitbucketPrefix.ReplaceAllString(gitRemote, "")
+
+	gitRemote = strings.Replace(gitRemote, ".git", "", 1)
 
 	return gitRemote
 }
