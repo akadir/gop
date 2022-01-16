@@ -15,7 +15,7 @@ import (
 func Run() {
 	app := &cli.App{
 		Name:    "gop",
-		Version: "0.3.0",
+		Version: "0.5.0",
 		Usage:   "opens current git repository's remote url on browser.",
 		Commands: []*cli.Command{
 			{
@@ -56,6 +56,20 @@ func Run() {
 
 					gitService := ServiceDecider.Decide(url)
 					url += gitService.GetPath(page.Mr)
+
+					openInBrowser(url)
+
+					return nil
+				},
+			},
+			{
+				Name:    "issues",
+				Usage:   "opens issues page of the repository.",
+				Action: func(c *cli.Context) error {
+					url := git.GetRepositoryUrl()
+
+					gitService := ServiceDecider.Decide(url)
+					url += gitService.GetPath(page.Issues)
 
 					openInBrowser(url)
 

@@ -6,4 +6,5 @@ const (
 	Branch Page = iota
 	Mr
 	Pipeline
+	Issues
 )

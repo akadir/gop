@@ -17,6 +17,8 @@ func (gitlab Gitlab) GetPath(selectedPage page.Page) string {
 	} else if selectedPage == page.Branch {
 		branchName := git.GetCurrentBranchName()
 		path = "/tree/" + branchName
+	} else if selectedPage == page.Issues {
+		path = "/issues"
 	}
 
 	return path
