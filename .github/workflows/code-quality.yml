@@ -6,7 +6,6 @@ on:
     paths-ignore:
       - 'README.md'
       - 'LICENSE'
-      - 'sonar-project.properties'
     tags-ignore:
       - '**'
 
