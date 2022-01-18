@@ -24,7 +24,7 @@ jobs:
           go mod download
           go get github.com/vektra/mockery/.../
           go generate ./...
-          go test ./... -count=1 -coverprofile=coverage.out
+          go test ./... -coverprofile=coverage.out -json
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
