@@ -32,6 +32,11 @@ jobs:
       - name: Get dependencies
         run: go mod download
 
+      - name: Get dependencies
+        run: |
+          go get github.com/vektra/mockery/.../
+          go generate ./...
+
       - name: Run tests
         run: go test ./... -count=1 -coverprofile=coverage.out
 
