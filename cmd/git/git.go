@@ -1,21 +1,27 @@
 package git
 
 import (
-	"github.com/fatih/color"
-	"os"
-	"os/exec"
+	"github.com/akadir/gop/cmd/executor"
 	"regexp"
 	"strings"
 )
 
-func GetRepositoryUrl() string {
-	output, err := exec.Command("git", "remote", "get-url", "origin").CombinedOutput()
+//go:generate mockery --name=Git --output=../../mocks/gitmock
+type git struct {
+	executor executor.Executor
+}
 
-	if err != nil {
-		color.Red("%s", strings.TrimSpace(string(output)))
-		color.Unset()
-		os.Exit(1)
-	}
+type Git interface {
+	GetRepositoryUrl() string
+	GetCurrentBranchName() string
+}
+
+func NewGit(executor executor.Executor) Git {
+	return &git{executor: executor}
+}
+
+func (git *git) GetRepositoryUrl() string {
+	output := git.executor.Exec("git", "remote", "get-url", "origin")
 
 	gitRemote := strings.TrimSpace(string(output))
 
@@ -32,14 +38,8 @@ func GetRepositoryUrl() string {
 	return gitRemote
 }
 
-func GetCurrentBranchName() string {
-	output, err := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD").CombinedOutput()
-
-	if err != nil {
-		color.Red("%s", strings.TrimSpace(string(output)))
-		color.Unset()
-		os.Exit(1)
-	}
+func (git *git) GetCurrentBranchName() string {
+	output := git.executor.Exec("git", "rev-parse", "--abbrev-ref", "HEAD")
 
 	return strings.TrimSpace(string(output))
 }

@@ -5,8 +5,13 @@ import (
 	"github.com/akadir/gop/page"
 )
 
-type Gitlab struct{}
+type Gitlab struct {
+	gitService git.Git
+}
 
+func NewGitlab(gitService git.Git) GitService {
+	return &Gitlab{gitService: gitService}
+}
 func (gitlab Gitlab) GetPath(selectedPage page.Page) string {
 	var path string
 
@@ -15,7 +20,7 @@ func (gitlab Gitlab) GetPath(selectedPage page.Page) string {
 	} else if selectedPage == page.Mr {
 		path = "/merge_requests"
 	} else if selectedPage == page.Branch {
-		branchName := git.GetCurrentBranchName()
+		branchName := gitlab.gitService.GetCurrentBranchName()
 		path = "/tree/" + branchName
 	} else if selectedPage == page.Issues {
 		path = "/issues"

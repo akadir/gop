@@ -5,7 +5,13 @@ import (
 	"github.com/akadir/gop/page"
 )
 
-type Bitbucket struct{}
+type Bitbucket struct {
+	gitService git.Git
+}
+
+func NewBitbucket(gitService git.Git) GitService {
+	return &Bitbucket{gitService: gitService}
+}
 
 func (bitbucket Bitbucket) GetPath(selectedPage page.Page) string {
 	var path string
@@ -15,7 +21,7 @@ func (bitbucket Bitbucket) GetPath(selectedPage page.Page) string {
 	} else if selectedPage == page.Mr {
 		path = "/pull-requests"
 	} else if selectedPage == page.Branch {
-		branchName := git.GetCurrentBranchName()
+		branchName := bitbucket.gitService.GetCurrentBranchName()
 		path = "/src/" + branchName
 	} else if selectedPage == page.Issues {
 		path = "/jira"

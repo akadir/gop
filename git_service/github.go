@@ -5,7 +5,13 @@ import (
 	"github.com/akadir/gop/page"
 )
 
-type Github struct{}
+type Github struct {
+	gitService git.Git
+}
+
+func NewGithub(gitService git.Git) GitService {
+	return &Github{gitService: gitService}
+}
 
 func (github Github) GetPath(selectedPage page.Page) string {
 	var path string
@@ -15,7 +21,7 @@ func (github Github) GetPath(selectedPage page.Page) string {
 	} else if selectedPage == page.Mr {
 		path = "/pulls"
 	} else if selectedPage == page.Branch {
-		branchName := git.GetCurrentBranchName()
+		branchName := github.gitService.GetCurrentBranchName()
 		path = "/tree/" + branchName
 	} else if selectedPage == page.Issues {
 		path = "/issues"

@@ -27,6 +27,11 @@
      <img src="https://sonarcloud.io/api/project_badges/measure?project=akadir_gop&metric=alert_status" alt="quality gate">
   </a>
 
+  <!-- code coverage -->
+  <a href="https://sonarcloud.io/project/overview?id=akadir_gop" title="Code Coverage">
+     <img src="https://sonarcloud.io/api/project_badges/measure?project=akadir_gop&metric=coverage" alt="code coverage">
+  </a>
+
   <!-- License -->
   <a href="https://img.shields.io/badge/License-MIT-blue.svg">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg"

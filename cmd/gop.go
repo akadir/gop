@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/akadir/gop/cmd/executor"
 	"github.com/akadir/gop/cmd/git"
 	ServiceDecider "github.com/akadir/gop/git_service"
 	"github.com/akadir/gop/page"
@@ -13,6 +14,7 @@ import (
 )
 
 func Run() {
+	gitCli := git.NewGit(executor.RealExecutor{})
 	app := &cli.App{
 		Name:    "gop",
 		Version: "0.5.0",
@@ -22,7 +24,7 @@ func Run() {
 				Name:  "branch",
 				Usage: "opens current branch in browser.",
 				Action: func(c *cli.Context) error {
-					url := git.GetRepositoryUrl()
+					url := gitCli.GetRepositoryUrl()
 
 					gitService := ServiceDecider.Decide(url)
 					url += gitService.GetPath(page.Branch)
@@ -37,7 +39,7 @@ func Run() {
 				Aliases: []string{"pipelines"},
 				Usage:   "opens actions/pipelines page of the repository.",
 				Action: func(c *cli.Context) error {
-					url := git.GetRepositoryUrl()
+					url := gitCli.GetRepositoryUrl()
 
 					gitService := ServiceDecider.Decide(url)
 					url += gitService.GetPath(page.Pipeline)
@@ -52,7 +54,7 @@ func Run() {
 				Aliases: []string{"prs"},
 				Usage:   "opens mrs/prs page of the repository.",
 				Action: func(c *cli.Context) error {
-					url := git.GetRepositoryUrl()
+					url := gitCli.GetRepositoryUrl()
 
 					gitService := ServiceDecider.Decide(url)
 					url += gitService.GetPath(page.Mr)
@@ -63,10 +65,10 @@ func Run() {
 				},
 			},
 			{
-				Name:    "issues",
-				Usage:   "opens issues page of the repository.",
+				Name:  "issues",
+				Usage: "opens issues page of the repository.",
 				Action: func(c *cli.Context) error {
-					url := git.GetRepositoryUrl()
+					url := gitCli.GetRepositoryUrl()
 
 					gitService := ServiceDecider.Decide(url)
 					url += gitService.GetPath(page.Issues)
@@ -78,7 +80,7 @@ func Run() {
 			},
 		},
 		Action: func(c *cli.Context) error {
-			url := git.GetRepositoryUrl()
+			url := gitCli.GetRepositoryUrl()
 
 			openInBrowser(url)
 
