@@ -20,9 +20,7 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
       - name: Run tests
-        run: |
-          go test -json ./... > report.json
-          go test ./... -count=1 -coverprofile=coverage.out
+        run: go test ./... -count=1 -coverprofile=coverage.out
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
