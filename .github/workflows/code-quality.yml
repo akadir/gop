@@ -19,12 +19,13 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Run tests
-        run: |
+      - uses: actions/setup-go@v2
+      - run: |
           go mod download
-          go get github.com/vektra/mockery/.../
+          go get github.com/vektra/mockery/v2/.../ 
           go generate ./...
-          go test ./... -coverprofile=coverage.out -json
+          go test ./... -coverprofile=coverage.out
+          ls -lah
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
