@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestRealExecutor_Exec(t *testing.T) {
+func TestRealExecutorExec(t *testing.T) {
 	//given
 	if os.Getenv("TEST_EXECUTOR_EXEC") == "1" {
 		//when
@@ -15,7 +15,7 @@ func TestRealExecutor_Exec(t *testing.T) {
 		return
 	}
 
-	cmd := exec.Command(os.Args[0], "-test.run=TestRealExecutor_Exec")
+	cmd := exec.Command(os.Args[0], "-test.run=TestRealExecutorExec")
 	cmd.Env = append(os.Environ(), "TEST_EXECUTOR_EXEC=1")
 	err := cmd.Run()
 	if e, ok := err.(*exec.ExitError); ok && !e.Success() {

@@ -11,7 +11,7 @@ var (
 	gitGithubMock *mocks.Git
 )
 
-func TestGithub_GetPath(t *testing.T) {
+func TestGithubGetPath(t *testing.T) {
 	//given
 	parameters := []struct {
 		input    page.Page

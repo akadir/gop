@@ -10,7 +10,7 @@ var (
 	executorMock *mocks.Executor
 )
 
-func TestGit_GetRepositoryUrl(t *testing.T) {
+func TestGitGetRepositoryUrl(t *testing.T) {
 	// given
 	parameters := []struct {
 		mockReturn []byte
@@ -36,7 +36,7 @@ func TestGit_GetRepositoryUrl(t *testing.T) {
 	}
 }
 
-func TestGit_GetCurrentBranchName(t *testing.T) {
+func TestGitGetCurrentBranchName(t *testing.T) {
 	// given
 	executorMock = new(mocks.Executor)
 	executorMock.On("Exec", "git", "rev-parse", "--abbrev-ref", "HEAD").Return([]byte("branch-name\n"))

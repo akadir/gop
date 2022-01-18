@@ -11,7 +11,7 @@ var (
 	gitBitbucketMock *mocks.Git
 )
 
-func TestBitbucket_GetPath(t *testing.T) {
+func TestBitbucketGetPath(t *testing.T) {
 	//given
 	parameters := []struct {
 		input    page.Page

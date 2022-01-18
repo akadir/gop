@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func Test_Decide_With_Known_Git_Services(t *testing.T) {
+func TestDecideWithKnownGitServices(t *testing.T) {
 	//given
 	parameters := []struct {
 		input    string
@@ -34,7 +34,7 @@ func Test_Decide_With_Known_Git_Services(t *testing.T) {
 	}
 }
 
-func Test_Decide_With_Unknown_Git_Services(t *testing.T) {
+func TestDecideWithUnknownGitServices(t *testing.T) {
 	//given
 	gitRemote := "unknownGitProvider"
 
@@ -44,7 +44,7 @@ func Test_Decide_With_Unknown_Git_Services(t *testing.T) {
 		return
 	}
 
-	cmd := exec.Command(os.Args[0], "-test.run=Test_Decide_With_Unknown_Git_Services")
+	cmd := exec.Command(os.Args[0], "-test.run=TestDecideWithUnknownGitServices")
 	cmd.Env = append(os.Environ(), "TEST_UNKNOWN_GIT_SERVICE=1")
 	err := cmd.Run()
 	if e, ok := err.(*exec.ExitError); ok && !e.Success() {

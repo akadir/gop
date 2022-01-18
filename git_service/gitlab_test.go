@@ -11,7 +11,7 @@ var (
 	gitGitlabMock *mocks.Git
 )
 
-func TestGitlab_GetPath(t *testing.T) {
+func TestGitlabGetPath(t *testing.T) {
 	//given
 	parameters := []struct {
 		input    page.Page
