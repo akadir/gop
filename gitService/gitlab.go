@@ -1,32 +1,31 @@
-package git_service
+package gitService
 
 import (
 	"github.com/akadir/gop/cmd/git"
 	"github.com/akadir/gop/page"
 )
 
-type Github struct {
+type Gitlab struct {
 	gitService git.Git
 }
 
-func NewGithub(gitService git.Git) GitService {
-	return &Github{gitService: gitService}
+func NewGitlab(gitService git.Git) GitService {
+	return &Gitlab{gitService: gitService}
 }
-
-func (github Github) GetPath(selectedPage page.Page) string {
+func (gitlab Gitlab) GetPath(selectedPage page.Page) string {
 	var path string
 
 	if selectedPage == page.Pipeline {
-		path = "/actions"
+		path = "/pipelines"
 	} else if selectedPage == page.Mr {
-		path = "/pulls"
+		path = "/merge_requests"
 	} else if selectedPage == page.Branch {
-		branchName := github.gitService.GetCurrentBranchName()
+		branchName := gitlab.gitService.GetCurrentBranchName()
 		path = "/tree/" + branchName
 	} else if selectedPage == page.Issues {
 		path = "/issues"
 	} else if selectedPage == page.Settings {
-		path = "/settings"
+		path = "/edit"
 	}
 
 	return path

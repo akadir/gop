@@ -1,4 +1,4 @@
-package git_service
+package gitService
 
 import (
 	"github.com/akadir/gop/page"
