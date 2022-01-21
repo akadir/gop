@@ -64,13 +64,14 @@ USAGE:
    gop [global options] command [command options] [arguments...]
 
 VERSION:
-   0.5.0
+   0.6.0
 
 COMMANDS:
    branch              opens current branch in browser.
    actions, pipelines  opens actions/pipelines page of the repository.
    mrs, prs            opens mrs/prs page of the repository.
    issues              opens issues page of the repository.
+   settings            opens settings page of the repository.
    help, h             Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
