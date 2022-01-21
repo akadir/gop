@@ -17,7 +17,7 @@ func Run() {
 	gitCli := git.NewGit(executor.RealExecutor{})
 	app := &cli.App{
 		Name:    "gop",
-		Version: "0.5.0",
+		Version: "0.6.0",
 		Usage:   "opens current git repository's remote url on browser.",
 		Commands: []*cli.Command{
 			{
