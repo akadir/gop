@@ -69,7 +69,7 @@ USAGE:
    gop [global options] command [command options] [arguments...]
 
 VERSION:
-   0.6.1
+   0.6.2
 
 COMMANDS:
    branch              opens current branch in browser.
