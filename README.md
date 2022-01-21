@@ -22,6 +22,11 @@
      <img src="https://img.shields.io/github/last-commit/akadir/gop?style=flat" alt="last commit">
   </a>
 
+  <!-- go report card -->
+  <a href="https://goreportcard.com/report/github.com/akadir/gop" title="Go Report">
+     <img src="https://goreportcard.com/badge/github.com/akadir/gop" alt="go report">
+  </a>
+
   <!-- quality gate -->
   <a href="https://sonarcloud.io/project/overview?id=akadir_gop" title="Quality Gate">
      <img src="https://sonarcloud.io/api/project_badges/measure?project=akadir_gop&metric=alert_status" alt="quality gate">
