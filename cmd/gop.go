@@ -78,6 +78,20 @@ func Run() {
 					return nil
 				},
 			},
+			{
+				Name:  "settings",
+				Usage: "opens settings page of the repository.",
+				Action: func(c *cli.Context) error {
+					url := gitCli.GetRepositoryUrl()
+
+					gitService := ServiceDecider.Decide(url)
+					url += gitService.GetPath(page.Settings)
+
+					openInBrowser(url)
+
+					return nil
+				},
+			},
 		},
 		Action: func(c *cli.Context) error {
 			url := gitCli.GetRepositoryUrl()

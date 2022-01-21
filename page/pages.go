@@ -7,4 +7,5 @@ const (
 	Mr
 	Pipeline
 	Issues
+	Settings
 )

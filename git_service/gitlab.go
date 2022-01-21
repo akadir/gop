@@ -24,6 +24,8 @@ func (gitlab Gitlab) GetPath(selectedPage page.Page) string {
 		path = "/tree/" + branchName
 	} else if selectedPage == page.Issues {
 		path = "/issues"
+	} else if selectedPage == page.Settings {
+		path = "/edit"
 	}
 
 	return path

@@ -25,6 +25,8 @@ func (github Github) GetPath(selectedPage page.Page) string {
 		path = "/tree/" + branchName
 	} else if selectedPage == page.Issues {
 		path = "/issues"
+	} else if selectedPage == page.Settings {
+		path = "/settings"
 	}
 
 	return path

@@ -21,6 +21,7 @@ func TestGitlabGetPath(t *testing.T) {
 		{page.Mr, "/merge_requests"},
 		{page.Branch, "/tree/branch-name"},
 		{page.Issues, "/issues"},
+		{page.Settings, "/edit"},
 	}
 
 	gitGitlabMock = new(mocks.Git)
@@ -30,9 +31,7 @@ func TestGitlabGetPath(t *testing.T) {
 	for i := range parameters {
 		// when
 		actual := githubService.GetPath(parameters[i].input)
-		if actual != parameters[i].expected {
-			// then
-			assert.Equal(t, parameters[i].expected, actual)
-		}
+		// then
+		assert.Equal(t, parameters[i].expected, actual)
 	}
 }

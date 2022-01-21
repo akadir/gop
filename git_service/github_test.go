@@ -21,6 +21,7 @@ func TestGithubGetPath(t *testing.T) {
 		{page.Mr, "/pulls"},
 		{page.Branch, "/tree/branch-name"},
 		{page.Issues, "/issues"},
+		{page.Settings, "/settings"},
 	}
 
 	gitGithubMock = new(mocks.Git)
@@ -30,9 +31,7 @@ func TestGithubGetPath(t *testing.T) {
 	for i := range parameters {
 		// when
 		actual := githubService.GetPath(parameters[i].input)
-		if actual != parameters[i].expected {
-			// then
-			assert.Equal(t, parameters[i].expected, actual)
-		}
+		// then
+		assert.Equal(t, parameters[i].expected, actual)
 	}
 }

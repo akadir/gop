@@ -21,6 +21,7 @@ func TestBitbucketGetPath(t *testing.T) {
 		{page.Mr, "/pull-requests"},
 		{page.Branch, "/src/branch-name"},
 		{page.Issues, "/jira"},
+		{page.Settings, "/admin"},
 	}
 
 	gitBitbucketMock = new(mocks.Git)
@@ -30,9 +31,7 @@ func TestBitbucketGetPath(t *testing.T) {
 	for i := range parameters {
 		// when
 		actual := bitBucketService.GetPath(parameters[i].input)
-		if actual != parameters[i].expected {
-			// then
-			assert.Equal(t, parameters[i].expected, actual)
-		}
+		// then
+		assert.Equal(t, parameters[i].expected, actual)
 	}
 }

@@ -25,6 +25,8 @@ func (bitbucket Bitbucket) GetPath(selectedPage page.Page) string {
 		path = "/src/" + branchName
 	} else if selectedPage == page.Issues {
 		path = "/jira"
+	} else if selectedPage == page.Settings {
+		path = "/admin"
 	}
 
 	return path
