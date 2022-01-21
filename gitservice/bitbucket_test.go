@@ -1,4 +1,4 @@
-package gitService
+package gitservice
 
 import (
 	mocks "github.com/akadir/gop/mocks/gitmock"

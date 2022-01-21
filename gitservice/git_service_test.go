@@ -1,4 +1,4 @@
-package gitService
+package gitservice
 
 import (
 	"github.com/stretchr/testify/assert"

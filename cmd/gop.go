@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/akadir/gop/cmd/executor"
 	"github.com/akadir/gop/cmd/git"
-	ServiceDecider "github.com/akadir/gop/gitService"
+	ServiceDecider "github.com/akadir/gop/gitservice"
 	"github.com/akadir/gop/page"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"

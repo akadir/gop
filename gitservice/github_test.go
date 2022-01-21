@@ -1,4 +1,4 @@
-package gitService
+package gitservice
 
 import (
 	mocks "github.com/akadir/gop/mocks/gitmock"
@@ -8,25 +8,25 @@ import (
 )
 
 var (
-	gitGitlabMock *mocks.Git
+	gitGithubMock *mocks.Git
 )
 
-func TestGitlabGetPath(t *testing.T) {
+func TestGithubGetPath(t *testing.T) {
 	//given
 	parameters := []struct {
 		input    page.Page
 		expected string
 	}{
-		{page.Pipeline, "/pipelines"},
-		{page.Mr, "/merge_requests"},
+		{page.Pipeline, "/actions"},
+		{page.Mr, "/pulls"},
 		{page.Branch, "/tree/branch-name"},
 		{page.Issues, "/issues"},
-		{page.Settings, "/edit"},
+		{page.Settings, "/settings"},
 	}
 
-	gitGitlabMock = new(mocks.Git)
-	gitGitlabMock.On("GetCurrentBranchName").Return("branch-name")
-	githubService := NewGitlab(gitGitlabMock)
+	gitGithubMock = new(mocks.Git)
+	gitGithubMock.On("GetCurrentBranchName").Return("branch-name")
+	githubService := NewGithub(gitGithubMock)
 
 	for i := range parameters {
 		// when
