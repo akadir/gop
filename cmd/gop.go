@@ -15,10 +15,16 @@ import (
 
 func Run() {
 	gitCli := git.NewGit(executor.RealExecutor{})
+
+	suppoertedShellCompletionMap := make(map[string]string)
+	suppoertedShellCompletionMap["zsh"] = "./autocomplete/zsh_autocomplete"
+	suppoertedShellCompletionMap["bash"] = "./autocomplete/bash_autocomplete"
+	suppoertedShellCompletionMap["powershell"] = "./autocomplete/powershell_autocomplete.ps1"
+
 	app := &cli.App{
 		Name:                 "gop",
 		Version:              "0.6.2",
-		Usage:                "opens current git repository's remote url on browser.",
+		Usage:                "gop opens current git repository's remote url on browser.",
 		EnableBashCompletion: true,
 		Authors: []*cli.Author{
 			{
@@ -28,8 +34,9 @@ func Run() {
 		},
 		Commands: []*cli.Command{
 			{
-				Name:  "branch",
-				Usage: "opens current branch in browser.",
+				Name:     "branch",
+				Usage:    "current branch in browser.",
+				Category: "open",
 				Action: func(c *cli.Context) error {
 					url := gitCli.GetRepositoryUrl()
 
@@ -40,11 +47,11 @@ func Run() {
 
 					return nil
 				},
-			},
-			{
-				Name:    "actions",
-				Aliases: []string{"pipelines"},
-				Usage:   "opens actions/pipelines page of the repository.",
+			}, {
+				Name:     "actions",
+				Aliases:  []string{"pipelines"},
+				Usage:    "actions/pipelines page of the repository.",
+				Category: "open",
 				Action: func(c *cli.Context) error {
 					url := gitCli.GetRepositoryUrl()
 
@@ -55,11 +62,11 @@ func Run() {
 
 					return nil
 				},
-			},
-			{
-				Name:    "mrs",
-				Aliases: []string{"prs"},
-				Usage:   "opens mrs/prs page of the repository.",
+			}, {
+				Name:     "mrs",
+				Aliases:  []string{"prs"},
+				Usage:    "mrs/prs page of the repository.",
+				Category: "open",
 				Action: func(c *cli.Context) error {
 					url := gitCli.GetRepositoryUrl()
 
@@ -70,10 +77,10 @@ func Run() {
 
 					return nil
 				},
-			},
-			{
-				Name:  "issues",
-				Usage: "opens issues page of the repository.",
+			}, {
+				Name:     "issues",
+				Usage:    "issues page of the repository.",
+				Category: "open",
 				Action: func(c *cli.Context) error {
 					url := gitCli.GetRepositoryUrl()
 
@@ -84,10 +91,10 @@ func Run() {
 
 					return nil
 				},
-			},
-			{
-				Name:  "settings",
-				Usage: "opens settings page of the repository.",
+			}, {
+				Name:     "settings",
+				Usage:    "settings page of the repository.",
+				Category: "open",
 				Action: func(c *cli.Context) error {
 					url := gitCli.GetRepositoryUrl()
 
@@ -95,6 +102,35 @@ func Run() {
 					url += gitService.GetPath(page.Settings)
 
 					openInBrowser(url)
+
+					return nil
+				},
+			}, {
+				Name:     "completion",
+				Usage:    "output shell completion code for the specified shell (bash, zsh or powershell)",
+				Category: "settings",
+				Flags: []cli.Flag{
+					&cli.StringFlag{Name: "shell", Aliases: []string{"s"}},
+				},
+				Action: func(c *cli.Context) error {
+					args := c.Args()
+
+					shellType := args.First()
+
+					if autocompletePath, ok := suppoertedShellCompletionMap[shellType]; ok {
+						file, err := os.ReadFile(autocompletePath)
+
+						if err != nil {
+							fmt.Println("file not found")
+							os.Exit(1)
+
+						} else {
+							fmt.Println(string(file))
+						}
+					} else {
+						fmt.Println("unsupported shell type")
+						os.Exit(1)
+					}
 
 					return nil
 				},
