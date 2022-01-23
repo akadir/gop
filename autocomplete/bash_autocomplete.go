@@ -1,4 +1,6 @@
-#! /bin/bash
+package autocomplete
+
+const BASH_AUTO_COMPLETE = `#! /bin/bash
 
 : ${PROG:=$(basename ${BASH_SOURCE})}
 
@@ -18,4 +20,4 @@ _cli_bash_autocomplete() {
 }
 
 complete -o bashdefault -o default -o nospace -F _cli_bash_autocomplete $PROG
-unset PROG
+unset PROG`

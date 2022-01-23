@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/akadir/gop/autocomplete"
 	"github.com/akadir/gop/cmd/executor"
 	"github.com/akadir/gop/cmd/git"
 	ServiceDecider "github.com/akadir/gop/gitservice"
@@ -15,10 +16,10 @@ import (
 func Run() {
 	gitCli := git.NewGit(executor.RealExecutor{})
 
-	suppoertedShellCompletionMap := make(map[string]string)
-	suppoertedShellCompletionMap["zsh"] = "./autocomplete/zsh_autocomplete"
-	suppoertedShellCompletionMap["bash"] = "./autocomplete/bash_autocomplete"
-	suppoertedShellCompletionMap["powershell"] = "./autocomplete/powershell_autocomplete.ps1"
+	supportedShellTypes := make(map[string]string)
+	supportedShellTypes["bash"] = autocomplete.BASH_AUTO_COMPLETE
+	supportedShellTypes["zsh"] = autocomplete.ZSH_AUTO_COMPLETE
+	supportedShellTypes["powershell"] = autocomplete.POWERSHELL_AUTO_COMPLETE
 
 	app := &cli.App{
 		Name:                 "gop",
@@ -108,24 +109,13 @@ func Run() {
 				Name:     "completion",
 				Usage:    "output shell completion code for the specified shell (bash, zsh or powershell)",
 				Category: "settings",
-				Flags: []cli.Flag{
-					&cli.StringFlag{Name: "shell", Aliases: []string{"s"}},
-				},
 				Action: func(c *cli.Context) error {
 					args := c.Args()
 
 					shellType := args.First()
 
-					if autocompletePath, ok := suppoertedShellCompletionMap[shellType]; ok {
-						file, err := os.ReadFile(autocompletePath)
-
-						if err != nil {
-							fmt.Println("file not found")
-							os.Exit(1)
-
-						} else {
-							fmt.Println(string(file))
-						}
+					if shellAutocompletion, ok := supportedShellTypes[shellType]; ok {
+						fmt.Println(shellAutocompletion)
 					} else {
 						fmt.Println("unsupported shell type")
 						os.Exit(1)

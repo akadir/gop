@@ -1,4 +1,6 @@
-#compdef $PROG
+package autocomplete
+
+const ZSH_AUTO_COMPLETE = `#compdef $PROG
 
 _cli_zsh_autocomplete() {
 
@@ -20,4 +22,4 @@ _cli_zsh_autocomplete() {
   return
 }
 
-compdef _cli_zsh_autocomplete $PROG
+compdef _cli_zsh_autocomplete $PROG`
