@@ -1,6 +1,8 @@
 package gitservice
 
 import (
+	"github.com/akadir/gop/cmd/executor"
+	"github.com/akadir/gop/cmd/git"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"os/exec"
@@ -9,19 +11,21 @@ import (
 
 func TestDecideWithKnownGitServices(t *testing.T) {
 	//given
+	gitCli := git.NewGit(executor.RealExecutor{})
+
 	parameters := []struct {
 		input    string
 		expected GitService
 	}{
-		{"github", Github{}},
-		{"gitlab", Gitlab{}},
-		{"bitbucket", Bitbucket{}},
-		{"git@github.com:foo/bar.git", Github{}},
-		{"https://github.com/foo/bar.git", Github{}},
-		{"https://gitlab.com/akadir/cv.git", Gitlab{}},
-		{"git@gitlab.com:akadir/cv.git", Gitlab{}},
-		{"https://bar@bitbucket.org/foo/bar.git", Bitbucket{}},
-		{"git@bitbucket.org:foo/bar.git", Bitbucket{}},
+		{"github", NewGithub(gitCli)},
+		{"gitlab", NewGitlab(gitCli)},
+		{"bitbucket", NewBitbucket(gitCli)},
+		{"git@github.com:foo/bar.git", NewGithub(gitCli)},
+		{"https://github.com/foo/bar.git", NewGithub(gitCli)},
+		{"https://gitlab.com/akadir/cv.git", NewGitlab(gitCli)},
+		{"git@gitlab.com:akadir/cv.git", NewGitlab(gitCli)},
+		{"https://bar@bitbucket.org/foo/bar.git", NewBitbucket(gitCli)},
+		{"git@bitbucket.org:foo/bar.git", NewBitbucket(gitCli)},
 	}
 
 	for i := range parameters {
