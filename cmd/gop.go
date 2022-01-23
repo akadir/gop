@@ -23,7 +23,7 @@ func Run() {
 
 	app := &cli.App{
 		Name:                 "gop",
-		Version:              "0.7.0",
+		Version:              "0.7.1",
 		Usage:                "gop opens current git repository's remote url on browser.",
 		EnableBashCompletion: true,
 		Authors: []*cli.Author{
