@@ -6,7 +6,6 @@ import (
 	"github.com/akadir/gop/cmd/git"
 	ServiceDecider "github.com/akadir/gop/gitservice"
 	"github.com/akadir/gop/page"
-	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"os"
 	"os/exec"
@@ -153,8 +152,7 @@ func Run() {
 
 	err := app.Run(os.Args)
 	if err != nil {
-		color.Red(err.Error())
-		color.Unset()
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 }
@@ -174,8 +172,7 @@ func openInBrowser(url string) {
 	}
 
 	if err != nil {
-		color.Red(err.Error())
-		color.Unset()
+		fmt.Println(err.Error())
 		os.Exit(1)
 	}
 }

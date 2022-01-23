@@ -1,8 +1,8 @@
 package gitservice
 
 import (
+	"fmt"
 	"github.com/akadir/gop/page"
-	"github.com/fatih/color"
 	"os"
 	"strings"
 )
@@ -21,8 +21,7 @@ func Decide(url string) GitService {
 	} else if strings.Contains(url, "bitbucket") {
 		gitService = Bitbucket{}
 	} else {
-		color.Red("unknown git hosting service.")
-		color.Unset()
+		fmt.Println("unknown git hosting service.")
 		os.Exit(1)
 	}
 

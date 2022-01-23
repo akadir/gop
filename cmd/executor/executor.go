@@ -1,7 +1,7 @@
 package executor
 
 import (
-	"github.com/fatih/color"
+	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -18,8 +18,7 @@ func (r RealExecutor) Exec(command string, args ...string) []byte {
 	output, err := exec.Command(command, args...).CombinedOutput()
 
 	if err != nil {
-		color.Red("%s", strings.TrimSpace(string(output)))
-		color.Unset()
+		fmt.Println(strings.TrimSpace(string(output)))
 		os.Exit(1)
 	}
 
