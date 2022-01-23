@@ -16,9 +16,16 @@ import (
 func Run() {
 	gitCli := git.NewGit(executor.RealExecutor{})
 	app := &cli.App{
-		Name:    "gop",
-		Version: "0.6.2",
-		Usage:   "opens current git repository's remote url on browser.",
+		Name:                 "gop",
+		Version:              "0.6.2",
+		Usage:                "opens current git repository's remote url on browser.",
+		EnableBashCompletion: true,
+		Authors: []*cli.Author{
+			{
+				Name:  "https://github.com/akadir",
+				Email: "",
+			},
+		},
 		Commands: []*cli.Command{
 			{
 				Name:  "branch",
