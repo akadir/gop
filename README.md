@@ -17,6 +17,11 @@
     <img src="https://github.com/akadir/gop/actions/workflows/build.yml/badge.svg" alt="CI"/>
   </a>
 
+  <!-- version -->
+  <a href="https://github.com/akadir/gop/tags" title="build status">
+    <img src="https://img.shields.io/github/v/tag/akadir/gop?color=white" alt="version"/>
+  </a>
+
   <!-- last commit -->
   <a href="https://github.com/akadir/muninn/commits" title="Last Commit">
      <img src="https://img.shields.io/github/last-commit/akadir/gop?style=flat" alt="last commit">
