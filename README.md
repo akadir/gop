@@ -18,8 +18,8 @@
   </a>
 
   <!-- version -->
-  <a href="https://github.com/akadir/gop/tags" title="build status">
-    <img src="https://img.shields.io/github/v/tag/akadir/gop?color=white" alt="version"/>
+  <a href="https://github.com/akadir/gop/tags" title="latest tag">
+    <img src="https://img.shields.io/github/v/tag/akadir/gop?color=white" alt="latest tag"/>
   </a>
 
   <!-- last commit -->
