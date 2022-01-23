@@ -58,30 +58,19 @@ brew tap akadir/gop && brew install gop
 
 Currently, in **beta** version.
 
-Run `gop` under git repository. `gop -h` to see help.
+Run `gop` under git repository. `gop -h` to see available commands.
 
+## Autocomplete
+
+bash:
 ```shell
-> gop -h
-NAME:
-   gop - opens current git repository's remote url on browser.
-
-USAGE:
-   gop [global options] command [command options] [arguments...]
-
-VERSION:
-   0.6.2
-
-COMMANDS:
-   branch              opens current branch in browser.
-   actions, pipelines  opens actions/pipelines page of the repository.
-   mrs, prs            opens mrs/prs page of the repository.
-   issues              opens issues page of the repository.
-   settings            opens settings page of the repository.
-   help, h             Shows a list of commands or help for one command
-
-GLOBAL OPTIONS:
-   --help, -h     show help (default: false)
-   --version, -v  print only the version (default: false)
+# append into ~/.bashrc
+PROG=gop source /dev/stdin <<< "$(gop completion bash)"
+```
+zsh:
+```shell
+# append into ~/.zshrc
+PROG=gop source /dev/stdin <<< "$(gop completion zsh)"
 ```
 
 ## License
