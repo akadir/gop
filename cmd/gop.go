@@ -14,6 +14,11 @@ import (
 )
 
 func Run() {
+	if !commandExists("git") {
+		fmt.Println("git is not installed. Please install git and try again.")
+		os.Exit(1)
+	}
+
 	gitCli := git.NewGit(executor.RealExecutor{})
 
 	supportedShellTypes := make(map[string]string)
@@ -145,6 +150,11 @@ func Run() {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
+}
+
+func commandExists(cmd string) bool {
+	_, err := exec.LookPath(cmd)
+	return err == nil
 }
 
 func openInBrowser(url string) {

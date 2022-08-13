@@ -1,14 +1,18 @@
 package git
 
 import (
+	"fmt"
 	"github.com/akadir/gop/cmd/executor"
+	"os"
 	"regexp"
 	"strings"
 )
 
 //go:generate mockery --name=Git --output=../../mocks/gitmock
+
 type git struct {
-	executor executor.Executor
+	executor    executor.Executor
+	remoteAlias string
 }
 
 type Git interface {
@@ -17,11 +21,20 @@ type Git interface {
 }
 
 func NewGit(executor executor.Executor) Git {
-	return &git{executor: executor}
+	gitRemoteAlias := strings.TrimSpace(string(executor.Exec("git", "remote", "show")))
+
+	if gitRemoteAlias == "" {
+		fmt.Println("git remote not found in current directory. Please check git remote is set.")
+		os.Exit(1)
+	} else {
+		gitRemoteAlias = strings.Split(gitRemoteAlias, "\n")[0]
+	}
+
+	return &git{executor: executor, remoteAlias: gitRemoteAlias}
 }
 
 func (git *git) GetRepositoryUrl() string {
-	output := git.executor.Exec("git", "remote", "get-url", "origin")
+	output := git.executor.Exec("git", "remote", "get-url", git.remoteAlias)
 
 	gitRemote := strings.TrimSpace(string(output))
 
@@ -39,7 +52,15 @@ func (git *git) GetRepositoryUrl() string {
 }
 
 func (git *git) GetCurrentBranchName() string {
-	output := git.executor.Exec("git", "rev-parse", "--abbrev-ref", "HEAD")
+	output := git.executor.Exec("git", "rev-parse", "--abbrev-ref", "HEAD@{u}")
 
-	return strings.TrimSpace(string(output))
+	branchName := strings.Split(strings.TrimSpace(string(output)), "\n")[0]
+
+	branchNameParts := strings.Split(branchName, "/")
+
+	if len(branchNameParts) > 1 {
+		return strings.Join(branchNameParts[1:], "/")
+	} else {
+		return branchName
+	}
 }
