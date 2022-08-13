@@ -21,7 +21,7 @@ jobs:
 
       - name: Get dependencies
         run: |
-          go get github.com/vektra/mockery/v2/.../ 
+          go get github.com/vektra/mockery/v2/.../@v2.9.4 
           go generate ./...
           go mod tidy
 
