@@ -11,8 +11,7 @@ import (
 //go:generate mockery --name=Git --output=../../mocks/gitmock
 
 type git struct {
-	executor    executor.Executor
-	remoteAlias string
+	executor executor.Executor
 }
 
 type Git interface {
@@ -21,7 +20,11 @@ type Git interface {
 }
 
 func NewGit(executor executor.Executor) Git {
-	gitRemoteAlias := strings.TrimSpace(string(executor.Exec("git", "remote", "show")))
+	return &git{executor: executor}
+}
+
+func (git *git) getRemoteAlias() string {
+	gitRemoteAlias := strings.TrimSpace(string(git.executor.Exec("git", "remote", "show")))
 
 	if gitRemoteAlias == "" {
 		fmt.Println("git remote not found in current directory. Please check git remote is set.")
@@ -30,11 +33,12 @@ func NewGit(executor executor.Executor) Git {
 		gitRemoteAlias = strings.Split(gitRemoteAlias, "\n")[0]
 	}
 
-	return &git{executor: executor, remoteAlias: gitRemoteAlias}
+	return gitRemoteAlias
 }
 
 func (git *git) GetRepositoryUrl() string {
-	output := git.executor.Exec("git", "remote", "get-url", git.remoteAlias)
+	remoteAlias := git.getRemoteAlias()
+	output := git.executor.Exec("git", "remote", "get-url", remoteAlias)
 
 	gitRemote := strings.TrimSpace(string(output))
 
