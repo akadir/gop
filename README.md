@@ -23,7 +23,7 @@
   </a>
 
   <!-- last commit -->
-  <a href="https://github.com/akadir/muninn/commits" title="Last Commit">
+  <a href="https://github.com/akadir/gop/commits" title="Last Commit">
      <img src="https://img.shields.io/github/last-commit/akadir/gop?style=flat" alt="last commit">
   </a>
 
