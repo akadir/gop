@@ -50,7 +50,9 @@ func (git *git) GetRepositoryUrl() string {
 	bitbucketPrefix := regexp.MustCompile(`\w*@`)
 	gitRemote = bitbucketPrefix.ReplaceAllString(gitRemote, "")
 
-	gitRemote = strings.Replace(gitRemote, ".git", "", 1)
+	if strings.HasSuffix(gitRemote, ".git") {
+		gitRemote = gitRemote[:len(gitRemote)-4]
+	}
 
 	return gitRemote
 }

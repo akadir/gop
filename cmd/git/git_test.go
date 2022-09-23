@@ -19,6 +19,7 @@ func TestGitGetRepositoryUrl(t *testing.T) {
 	}{
 		{[]byte("origin"), []byte("git@github.com:foo/bar.git\n"), "https://github.com/foo/bar"},
 		{[]byte("origin"), []byte("https://github.com/foo/bar.git\n"), "https://github.com/foo/bar"},
+		{[]byte("origin"), []byte("git@github.com:foo/bar.github.io.git\n"), "https://github.com/foo/bar.github.io"},
 		{[]byte("origin"), []byte("git@gitlab.com:foo/bar.git\n"), "https://gitlab.com/foo/bar"},
 		{[]byte("origin"), []byte("https://gitlab.com/foo/bar.git\n"), "https://gitlab.com/foo/bar"},
 		{[]byte("origin"), []byte("https://foo@bitbucket.org/foo/bar.git\n"), "https://bitbucket.org/foo/bar"},
