@@ -111,6 +111,31 @@ func Run() {
 					return nil
 				},
 			}, {
+				Name:     "path",
+				Usage:    "page of the given path.",
+				Category: "open",
+				Action: func(c *cli.Context) error {
+					url := gitCli.GetRepositoryUrl()
+					gitService := ServiceDecider.Decide(url)
+
+					if c.NArg() == 0 {
+						url += gitService.GetPath(page.Branch)
+					} else if c.NArg() > 1 {
+						fmt.Println("path command accepts only one argument.")
+						os.Exit(1)
+					} else {
+						currentBranch := gitCli.GetCurrentBranchName()
+						path := c.Args().First()
+						middlePath := gitService.GetPath(page.Path)
+
+						url = fmt.Sprintf("%s%s/%s/%s", url, middlePath, currentBranch, path)
+					}
+
+					openInBrowser(url)
+
+					return nil
+				},
+			}, {
 				Name:     "completion",
 				Usage:    "output shell completion code for the specified shell (bash, zsh or powershell)",
 				Category: "settings",

@@ -22,6 +22,7 @@ func TestBitbucketGetPath(t *testing.T) {
 		{page.Branch, "/src/branch-name"},
 		{page.Issues, "/jira"},
 		{page.Settings, "/admin"},
+		{page.Path, "/src"},
 	}
 
 	gitBitbucketMock = new(mocks.Git)

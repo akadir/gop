@@ -26,6 +26,8 @@ func (gitlab Gitlab) GetPath(selectedPage page.Page) string {
 		path = "/issues"
 	} else if selectedPage == page.Settings {
 		path = "/edit"
+	} else if selectedPage == page.Path {
+		path = "/-/blob"
 	}
 
 	return path

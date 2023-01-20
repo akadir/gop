@@ -22,6 +22,7 @@ func TestGithubGetPath(t *testing.T) {
 		{page.Branch, "/tree/branch-name"},
 		{page.Issues, "/issues"},
 		{page.Settings, "/settings"},
+		{page.Path, "/blob"},
 	}
 
 	gitGithubMock = new(mocks.Git)

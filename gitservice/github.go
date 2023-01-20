@@ -27,6 +27,8 @@ func (github Github) GetPath(selectedPage page.Page) string {
 		path = "/issues"
 	} else if selectedPage == page.Settings {
 		path = "/settings"
+	} else if selectedPage == page.Path {
+		path = "/blob"
 	}
 
 	return path

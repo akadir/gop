@@ -8,4 +8,5 @@ const (
 	Pipeline
 	Issues
 	Settings
+	Path
 )

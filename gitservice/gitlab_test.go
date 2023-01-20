@@ -22,6 +22,7 @@ func TestGitlabGetPath(t *testing.T) {
 		{page.Branch, "/tree/branch-name"},
 		{page.Issues, "/issues"},
 		{page.Settings, "/edit"},
+		{page.Path, "/-/blob"},
 	}
 
 	gitGitlabMock = new(mocks.Git)
