@@ -66,3 +66,16 @@ func TestGitGetCurrentBranchNameWithRemotePrefix(t *testing.T) {
 	// then
 	assert.Equal(t, "branch-name", branchName)
 }
+
+func TestGitGetCurrentBranchNameWithRemotePrefixAndContainingSlash(t *testing.T) {
+	// given
+	executorMock = new(mocks.Executor)
+	executorMock.On("Exec", "git", "remote", "show").Return([]byte("origin"))
+	executorMock.On("Exec", "git", "rev-parse", "--abbrev-ref", "HEAD@{u}").Return([]byte("origin/branch-name/foo\n"))
+	gitCli := NewGit(executorMock)
+
+	// when
+	branchName := gitCli.GetCurrentBranchName()
+	// then
+	assert.Equal(t, "branch-name/foo", branchName)
+}
