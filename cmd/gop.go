@@ -156,6 +156,11 @@ func Run() {
 			},
 		},
 		Action: func(c *cli.Context) error {
+			if c.Args().Len() > 0 {
+				fmt.Printf("invalid command provided: %s\n", c.Args().First())
+				os.Exit(1)
+			}
+
 			url := gitCli.GetRepositoryUrl()
 
 			openInBrowser(url)
