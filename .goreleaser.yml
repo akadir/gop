@@ -33,7 +33,8 @@ changelog:
       - Merge pull request
       - Merge branch
 brews:
-  - repository:
+  - name: gop
+    repository:
       owner: akadir
       name: homebrew-gop
     directory: Formula
@@ -41,4 +42,5 @@ brews:
     description: simple cli app to open current git repository's remote url in the default browser.
     dependencies:
       - name: git
-
+    install: |
+      bin.install "gop"
